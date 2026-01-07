@@ -79,6 +79,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 * New `remote_tags()` revset function to query remote tags.
 
+* `jj gerrit upload` now recognizes Change-Id explicitly set via the alternative
+  trailer `Link`, and will generate a `Link: <review-url>/id/<change-id>` trailer
+  if `gerrit.review-url` option is set.
+
 ### Fixed bugs
 
 * `jj git init --colocate` now refuses to run inside a Git worktree, providing
