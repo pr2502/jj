@@ -138,8 +138,11 @@ descriptions:
 [templates]
 commit_trailers = '''
 if(
-  !trailers.contains_key("Change-Id"),
-  format_gerrit_change_id_trailer(self)
+  !trailers.contains_key("Change-Id") && !trailers.contains_key("Link"),
+  coalesce(
+    format_gerrit_link_trailer(self),
+    format_gerrit_change_id_trailer(self),
+  )
 )
 '''
 ```

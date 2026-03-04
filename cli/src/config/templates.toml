@@ -639,6 +639,22 @@ concat(
 
 # Gerrit change id is 40 chars, jj change id is 32, so we need some padding.
 # `6a6a6964` is the hexadecimal of `jjid` in ASCII, just to not pad with zeros.
+"gerrit_change_id(commit)" = '''
+"I" ++ commit.change_id().normal_hex() ++ "6a6a6964"
+'''
+
 "format_gerrit_change_id_trailer(commit)" = '''
-"Change-Id: I" ++ commit.change_id().normal_hex() ++ "6a6a6964\n"
+"Change-Id: " ++ gerrit_change_id(commit) ++ "\n"
+'''
+
+"format_gerrit_link_trailer(commit)" = '''
+if(config("gerrit.review-url"),
+  concat(
+    "Link: ",
+    config("gerrit.review-url").as_string().remove_suffix("/"),
+    "/id/",
+    gerrit_change_id(commit),
+    "\n",
+  )
+)
 '''
